@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuMind AI | Your AI Knowledge Base</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+                    </div>
+                    <div>
+                        <h1 class="logo-title">DocuMind AI</h1>
+                        <p class="logo-sub">by Mohit Kourav</p>
+                    </div>
+                </div>
+                <button id="theme-toggle" class="icon-btn theme-btn" title="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+
+            <!-- Drive Connection -->
+            <div class="sidebar-section">
+                <div class="section-label">
+                    <span class="step-badge">1</span>
+                    Connect Drive
+                </div>
+                <div class="status-pill" id="auth-status">
+                    <span class="status-dot red"></span>
+                    <span id="auth-text">Not Connected</span>
+                </div>
+                <div class="btn-row">
+                    <button id="btn-connect" class="btn btn-primary">
+                        <svg viewBox="0 0 87.3 78" width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
+                        Connect Drive
+                    </button>
+                    <button id="btn-disconnect" class="btn btn-ghost btn-danger" disabled>
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                        Disconnect
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sync -->
+            <div class="sidebar-section">
+                <div class="section-label">
+                    <span class="step-badge">2</span>
+                    Sync Documents
+                </div>
+                <p class="section-hint">Leave blank for root, or paste a folder link.</p>
+                <input type="text" id="folder-link" placeholder="Drive Folder Link (Optional)" class="text-input">
+                <button id="btn-sync" class="btn btn-secondary" disabled>
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    Sync Now
+                </button>
+                <div id="sync-status" class="sync-feedback"></div>
+                <!-- Progress Bar -->
+                <div class="progress-wrap" id="progress-wrap" style="display:none;">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="sidebar-section stats-card" id="index-metrics">
+                <div class="section-label">Index Stats</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="metric-docs">0</div>
+                        <div class="stat-label">Documents</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="metric-chunks">0</div>
+                        <div class="stat-label">Chunks</div>
+                    </div>
+                    <div class="stat-item full-width">
+                        <div class="stat-status" id="metric-status">Empty</div>
+                    </div>
+                </div>
+                <button id="btn-clear" class="btn btn-ghost btn-danger" style="width:100%; margin-top:0.75rem;" disabled>
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    Clear All Data
+                </button>
+            </div>
+
+            <!-- Demo Docs -->
+            <div class="sidebar-section demo-section" id="demo-section">
+                <div class="section-label">Demo Docs</div>
+                <p class="section-hint">Try with sample documents:</p>
+                <div class="demo-link-box" onclick="navigator.clipboard.writeText('https://drive.google.com/drive/folders/1ZP8lXDro7XL3Kfyg2avmDwlSOcAgabc-?usp=sharing'); showToast('Folder link copied!');" title="Click to copy">
+                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy Sample Folder Link
+                </div>
+                <div class="demo-docs-list">
+                    <div class="demo-doc">
+                        <div class="demo-doc-name">
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Refund Policy
+                        </div>
+                        <div class="q-chips">
+                            <span class="q-chip" onclick="fillQuestion('What is our refund policy?')">Refund policy?</span>
+                            <span class="q-chip" onclick="fillQuestion('How many days to return an item?')">Return days?</span>
+                        </div>
+                    </div>
+                    <div class="demo-doc">
+                        <div class="demo-doc-name">
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            IT Security SOP
+                        </div>
+                        <div class="q-chips">
+                            <span class="q-chip" onclick="fillQuestion('Summarize IT security SOP')">Security SOP?</span>
+                            <span class="q-chip" onclick="fillQuestion('What are the password requirements?')">Password rules?</span>
+                        </div>
+                    </div>
+                    <div class="demo-doc">
+                        <div class="demo-doc-name">
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Compliance Guide
+                        </div>
+                        <div class="q-chips">
+                            <span class="q-chip" onclick="fillQuestion('What are the compliance guidelines?')">Compliance?</span>
+                            <span class="q-chip" onclick="fillQuestion('Who is responsible for compliance?')">Who manages?</span>
+                        </div>
+                    </div>
+                    <div class="demo-doc">
+                        <div class="demo-doc-name">
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Employee Handbook
+                        </div>
+                        <div class="q-chips">
+                            <span class="q-chip" onclick="fillQuestion('What are the core values?')">Core values?</span>
+                            <span class="q-chip" onclick="fillQuestion('What is the remote work policy?')">Remote work?</span>
+                        </div>
+                    </div>
+                    <div class="demo-doc">
+                        <div class="demo-doc-name">
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Expense Report SOP
+                        </div>
+                        <div class="q-chips">
+                            <span class="q-chip" onclick="fillQuestion('How do I submit an expense report?')">Submit report?</span>
+                            <span class="q-chip" onclick="fillQuestion('What expenses are eligible for reimbursement?')">Eligible expenses?</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <button class="icon-btn sidebar-toggle" id="sidebar-toggle" title="Toggle Sidebar">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                    <div class="chat-title">
+                        <h2>Ask your Documents</h2>
+                        <p class="chat-subtitle">Powered by RAG + FAISS + Groq LLM</p>
+                    </div>
+                </div>
+                <div class="chat-header-right">
+                    <button id="btn-speaker" class="icon-btn" title="Toggle Voice">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" class="icon-speaker-on"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" class="icon-speaker-off" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chat-history">
+                <!-- Locked overlay -->
+                <div class="chat-lock-overlay" id="chat-overlay">
+                    <div class="lock-content">
+                        <div class="lock-icon">
+                            <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="1.5" fill="none"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <h3>AI Assistant Locked</h3>
+                        <p>Connect your Drive or paste a public folder link and sync to unlock.</p>
+                    </div>
+                </div>
+
+                <!-- Welcome message -->
+                <div class="message ai-message welcome-msg" id="welcome-msg">
+                    <div class="msg-avatar">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+                    </div>
+                    <div class="msg-body">
+                        <div class="msg-name">DocuMind AI</div>
+                        <div class="msg-content">
+                            👋 Hello! I'm <strong>DocuMind AI</strong>, your intelligent document assistant.<br><br>
+                            Here's how to get started:<br>
+                            <ol style="margin: 0.5rem 0 0 1.2rem; line-height: 1.8;">
+                                <li><strong>Connect</strong> your Google Drive (or paste a public folder link)</li>
+                                <li><strong>Sync</strong> your documents — I'll index them intelligently</li>
+                                <li><strong>Ask</strong> anything about your documents!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Prompts -->
+            <div class="quick-prompts-bar" id="quick-prompts" style="display:none;">
+                <div class="quick-prompts-inner" id="quick-prompts-inner">
+                    <button class="qp-btn">What is our refund policy?</button>
+                    <button class="qp-btn">Summarize IT security SOP</button>
+                    <button class="qp-btn">What are the compliance guidelines?</button>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-area">
+                <div class="input-box" id="input-box">
+                    <input type="text" id="chat-input" placeholder="Ask anything about your documents..." disabled>
+                    <div class="input-actions">
+                        <button id="btn-mic" class="icon-btn mic-btn" disabled title="Voice Input">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                        </button>
+                        <button id="btn-send" class="send-btn" disabled>
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="input-hint">DocuMind AI answers only from your indexed documents.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
