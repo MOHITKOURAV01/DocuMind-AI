@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  documind-ai:
+    build: .
+    container_name: documind-ai-app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - documind_storage:/app/dm_storage
+      - documind_downloads:/app/dm_downloads
+    restart: unless-stopped
+
+volumes:
+  documind_storage:
+  documind_downloads:
