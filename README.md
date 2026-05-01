@@ -10,13 +10,13 @@
 [![Groq](https://img.shields.io/badge/Groq-LLM_API-orange?style=flat)](https://groq.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat)](LICENSE)
 
-**Built by [Mohit Kourav](https://github.com/MOHITKOURAV01)**
+**Built by [Mohit Kourav](https://github.com/MOHITKOURAV01) 🧑🏻‍💻** 
 
 </div>
 
 ---
 
-## 🚀 What is DocuMind AI?
+## What is DocuMind AI?
 
 DocuMind AI is a production-ready **Retrieval-Augmented Generation (RAG)** system that connects to your Google Drive, processes your documents intelligently, and lets you ask natural language questions — getting grounded answers sourced directly from your files.
 
@@ -41,7 +41,7 @@ Think of it as **ChatGPT, but trained exclusively on your own documents.**
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 DocuMind AI — RAG Pipeline
