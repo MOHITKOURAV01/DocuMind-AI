@@ -24,7 +24,7 @@ Think of it as **ChatGPT, but trained exclusively on your own documents.**
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---|---|
@@ -89,7 +89,7 @@ Project Structure:
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### 1. Prerequisites
 - Python 3.10+
@@ -139,11 +139,11 @@ PORT=8000
 python main.py
 ```
 
-Open [http://localhost:8000](http://localhost:8000) 🎉
+Open [http://localhost:8000](http://localhost:8000) 
 
 ---
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ```bash
 # Build and run
@@ -156,7 +156,7 @@ docker run -p 8000:8000 --env-file .env documind-ai
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 ### POST `/sync-drive`
 Sync and index documents from Google Drive.
@@ -236,7 +236,7 @@ Clear all indexed FAISS data and downloaded files.
 
 ---
 
-## 📊 Sample Q&A Output
+## Sample Q&A Output
 
 **Q:** *"What is the password policy according to IT Security SOP?"*
 
@@ -254,7 +254,7 @@ Clear all indexed FAISS data and downloaded files.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |---|---|
@@ -269,7 +269,7 @@ Clear all indexed FAISS data and downloaded files.
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] OpenSearch / Elasticsearch backend support
 - [ ] Async document processing pipeline
@@ -280,7 +280,7 @@ Clear all indexed FAISS data and downloaded files.
 
 ---
 
-## 👤 Author
+## Author
 
 **Mohit Kourav**
 - GitHub: [@MOHITKOURAV01](https://github.com/MOHITKOURAV01)
